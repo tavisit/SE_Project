@@ -1,0 +1,3 @@
+<template>
+  From profile
+</template>
