@@ -8,5 +8,8 @@
   "devDependencies": {
     "nuxt-windicss": "^2.0.5",
     "nuxt3": "latest"
+  },
+  "dependencies": {
+    "vue-picture-input": "^2.1.6"
   }
 }
