@@ -6,14 +6,10 @@ export default defineComponent({
     const inputDate = ref('')
 
     const inputHandle = () => {
-      console.log(inputStr.value, inputNum.value, inputDate.value)
+      // console.log(inputStr.value, inputNum.value, inputDate.value)
     }
 
-    const getFile = (evt) => {
-      console.log(evt.target.files[0], evt)
-    }
-
-    return { inputStr, inputNum, inputDate, inputHandle, getFile }
+    return { inputStr, inputNum, inputDate, inputHandle }
   }
 })
 </script>
@@ -114,7 +110,6 @@ export default defineComponent({
         </PrimaryInput>
 
         <PrimaryInput
-          @change="getFile"
           type="file"
         >
           <template #label>
@@ -153,8 +148,8 @@ export default defineComponent({
         </DangerInput>
 
         <DangerInput
-          @change="getFile"
           type="file"
+          multiple
         >
           <template #label>
             File input
@@ -163,11 +158,70 @@ export default defineComponent({
       </div>
     </div>
     <span class="text-2xl font-medium">Checkboxes (inputs under cover)</span>
-    <div class="flex flex-row gap-4">
-      <PrimaryInput type="checkbox" />
-      <SuccessInput type="checkbox" />
-      <WarnInput type="checkbox" />
-      <DangerInput type="checkbox" />
+    <div class="py-5 flex flex-row gap-4">
+      <PrimaryInput
+        type="checkbox"
+      >
+        <template #label>
+          Check 1
+        </template>
+      </PrimaryInput>
+      <SuccessInput
+        type="checkbox"
+      >
+        <template #label>
+          Check 2
+        </template>
+      </SuccessInput>
+      <WarnInput
+        type="checkbox"
+      >
+        <template #label>
+          Check 3
+        </template>
+      </WarnInput>
+      <DangerInput
+        type="checkbox"
+      >
+        <template #label>
+          Check 4
+        </template>
+      </DangerInput>
+    </div>
+    <span class="text-2xl font-medium">Radios (inputs under cover)</span>
+    <div class="py-5 flex flex-row gap-4">
+      <PrimaryInput
+        type="radio"
+        name="test"
+      >
+        <template #label>
+          Radio 1
+        </template>
+      </PrimaryInput>
+      <SuccessInput
+        type="radio"
+        name="test"
+      >
+        <template #label>
+          Radio 2
+        </template>
+      </SuccessInput>
+      <WarnInput
+        type="radio"
+        name="test"
+      >
+        <template #label>
+          Radio 3
+        </template>
+      </WarnInput>
+      <DangerInput
+        type="radio"
+        name="test"
+      >
+        <template #label>
+          Radio 4
+        </template>
+      </DangerInput>
     </div>
   </div>
 </template>
