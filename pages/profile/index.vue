@@ -1,3 +1,3 @@
 <template>
-  From profile
+  <span>From profile</span>
 </template>

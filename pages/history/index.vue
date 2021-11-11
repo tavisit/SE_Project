@@ -1,3 +1,3 @@
 <template>
-  From history
+  <span>From history</span> 
 </template>

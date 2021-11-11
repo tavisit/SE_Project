@@ -1,12 +1,5 @@
 <script lang="ts">
-type ButtonProps = {
-  href: String,
-  isTiny: Boolean,
-};
-
-import { toRefs, computed } from 'vue';
-
-export default {
+export default defineComponent({
   props: {
     // Button and Anchor specific props
     href: {
@@ -19,7 +12,7 @@ export default {
       default: false,
     },
   },
-  setup(props: ButtonProps) {
+  setup(props) {
     // Reactive props
     const { href, isTiny } = toRefs(props);
 
@@ -39,7 +32,7 @@ export default {
     // Return reactive props
     return { href, isTiny, componentType, padding };
   },
-}
+})
 </script>
 
 <template>

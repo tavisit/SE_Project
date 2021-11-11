@@ -1,3 +1,3 @@
 <template>
-  From batch
+  <span>From batch</span>
 </template>

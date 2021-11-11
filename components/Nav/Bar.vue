@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
   setup() {
-    const mobileMenuToggle = ref<Boolean>(true);
+    const mobileMenuToggle = ref(true);
 
     return {
       mobileMenuToggle,
@@ -37,17 +37,17 @@ export default {
             </div>
           </div>
         </div>
-        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex-1 flex items-center justify-center sm:(items-stretch justify-start)">
           <div class="flex-shrink-0 flex items-center">
             <!-- ICON -->
             <NuxtLink to="/"><IconApp /></NuxtLink>
           </div>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden sm:(block ml-6)">
             <!-- LIST -->
             <div class="flex space-x-4 tracking-wider">
               <NavLinks
-                styling="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold"
-                active="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-semibold"
+                styling="text-gray-300 hover:(bg-gray-700 text-white transform translate-y-1) px-3 py-2 rounded-md text-sm font-semibold"
+                active="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-semibold transform translate-y-1"
               />
             </div>
           </div>
@@ -74,7 +74,7 @@ export default {
     >
       <div class="px-2 pt-2 pb-3 space-y-1 tracking-wider">
         <NavLinks
-          styling="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-semibold"
+          styling="text-gray-300 hover:(bg-gray-700 text-white) block px-3 py-2 rounded-md text-base font-semibold"
           active="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-semibold"
         />
       </div>
