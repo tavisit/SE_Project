@@ -10,6 +10,5 @@
     "nuxt3": "latest"
   },
   "dependencies": {
-    "vue-picture-input": "^2.1.6"
   }
 }

@@ -1,29 +1,54 @@
-<template>
-    <component :is="type" :href="href" class="items-center w-50 bg-gray-100 text-gray-700 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-semibold focus:outline-none">
-      <slot/>
-    </component>
-</template>
+<script lang="ts">
+type ButtonProps = {
+  href: String,
+  isTiny: Boolean,
+};
 
-<script>
-  export default {
-    props: {
-      href: {
-        type: String,
-        default: null
-      },
-      to: {
-        type: String,
-        default: null
-      }
+import { toRefs, computed } from 'vue';
+
+export default {
+  props: {
+    // Button and Anchor specific props
+    href: {
+      type: String,
+      default: null
     },
-    computed: {
-      type() {
-        if (this.href) {
-          return 'a'
-        } else {
-          return 'button'
-        }
-      }
-    }
-  }
+    // Styling specific props
+    isTiny: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props: ButtonProps) {
+    // Reactive props
+    const { href, isTiny } = toRefs(props);
+
+    // Computed props
+    const componentType = computed(() => {
+      /**
+       ** There is also an <input type="submit" /> which acts like a button
+        * However it is shadowed by <button type="submit" /> which does the same thing
+        *  and also accepts content
+        */
+      return href.value ? 'a' : 'button';
+    });
+    const padding = computed(() => {
+      return isTiny.value ? 'px-1' : 'px-4 py-2';
+    });
+
+    // Return reactive props
+    return { href, isTiny, componentType, padding };
+  },
+}
 </script>
+
+<template>
+  <component
+    :is="componentType"
+    :href="href"
+    class="transition select-none rounded-md text-xs font-semibold tracking-widest border shadow"
+    :class="`${padding}`"
+  >
+    <slot/>
+  </component>
+</template>

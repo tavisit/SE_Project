@@ -4,14 +4,63 @@ export default {
 </script>
 
 <template>
-  <BaseHelloWorld />
-  <BaseFiledInput
-    placeholder="Your Name"
-    label="Email"
-    type="email"
-  />
-  <BaseButton
-    href="#"
-  >Helloadsfasef!</BaseButton>
-  <BaseFileInput></BaseFileInput>
+  <div class="p-5 flex flex-row gap-4">
+    <PrimaryButton
+      class="mt-1"
+    >
+      Button
+    </PrimaryButton>
+    <SecondaryButton
+      class="mt-1"
+    >
+      Button
+    </SecondaryButton>
+    <SuccessButton
+      class="mt-1"
+    >
+      Button
+    </SuccessButton>
+    <WarnButton
+      class="mt-1"
+    >
+      Button
+    </WarnButton>
+    <DangerButton
+      class="mt-1"
+    >
+      Button
+    </DangerButton>
+  </div>
+  <div class="p-5 flex flex-row gap-4">
+    <PrimaryButton
+      class="mt-1"
+      :isTiny="true"
+    >
+      Tiny
+    </PrimaryButton>
+    <SecondaryButton
+      class="mt-1"
+      :isTiny="true"
+    >
+      Tiny
+    </SecondaryButton>
+    <SuccessButton
+      class="mt-1"
+      :isTiny="true"
+    >
+      Tiny
+    </SuccessButton>
+    <WarnButton
+      class="mt-1"
+      :isTiny="true"
+    >
+      Tiny
+    </WarnButton>
+    <DangerButton
+      class="mt-1"
+      :isTiny="true"
+    >
+      Tiny
+    </DangerButton>
+  </div>
 </template>
