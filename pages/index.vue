@@ -107,12 +107,20 @@ export default defineComponent({
           v-model="inputDate"
           @input="inputHandle"
           type="date"
-        />
+        >
+          <template #label>
+            Date input
+          </template>
+        </PrimaryInput>
 
         <PrimaryInput
           @change="getFile"
           type="file"
-        />
+        >
+          <template #label>
+            File input
+          </template>
+        </PrimaryInput>
       </div>
       <div class="w-1/2 flex flex-col">
         <SuccessInput
@@ -138,12 +146,20 @@ export default defineComponent({
           v-model="inputDate"
           @input="inputHandle"
           type="date"
-        />
+        >
+          <template #label>
+            Date input
+          </template>
+        </DangerInput>
 
         <DangerInput
           @change="getFile"
           type="file"
-        />
+        >
+          <template #label>
+            File input
+          </template>
+        </DangerInput>
       </div>
     </div>
     <span class="text-2xl font-medium">Checkboxes (inputs under cover)</span>

@@ -29,8 +29,15 @@ export default defineComponent({
       context.emit('update:modelValue', val)
     }
 
+    const inputType = computed(() => {
+      //? I don't know if attrs are reactive!! maybe destruct $attrs with toRefs()?
+      return context.attrs.type ?? 'text';
+    })
+
+    const noPlaceholderInputs = ['date', 'checkbox', 'file'];
     const isPlaceholder = computed(() => {
-      return (modelValue.value || modelValue.value === 0) || activeInput.value
+      return (modelValue.value || modelValue.value === 0) || activeInput.value ||
+        noPlaceholderInputs.find(itype => itype == inputType.value)
     })
 
     return { label, activeInput, modelValue, toggleActiveInput, inputHandle, isPlaceholder }
@@ -43,7 +50,7 @@ export default defineComponent({
     <label
       class="absolute text-gray-400 left-[13px] top-[7px] transition pointer-events-none"
       :class="{
-        'transform -translate-y-10 scale-75 text-gray-900': isPlaceholder,
+        'transform -translate-y-10 scale-75 text-gray-600': isPlaceholder,
       }"
     >
       <slot name="label" />
