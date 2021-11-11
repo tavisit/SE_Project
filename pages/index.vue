@@ -43,6 +43,11 @@ export default defineComponent({
       >
         Button
       </DangerButton>
+      <AltButton
+        class="mt-1"
+      >
+        Button
+      </AltButton>
     </div>
     <span class="text-2xl font-medium">Tiny buttons</span>
     <div class="p-5 flex flex-row gap-4">

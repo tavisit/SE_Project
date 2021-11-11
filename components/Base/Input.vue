@@ -183,13 +183,13 @@ export default defineComponent({
           iref,
         }"
       >
-        <PrimaryButton
+        <BaseButton
           @click="inputClick"
-          class="text-center mr-1"
+          class="text-center mr-1 focus:(outline-none ring ring-gray-300) bg-gray-50 border-gray-200 hover:bg-gray-100 active:bg-gray-200"
           :isTiny="true"
         >
-          <IconFile class="inline-block w-5 h-5 fill-current text-gray-50" />
-        </PrimaryButton>
+          <IconFile class="inline-block w-6 h-6 fill-current" />
+        </BaseButton>
       </slot>
       {{ description }}
     </div>
