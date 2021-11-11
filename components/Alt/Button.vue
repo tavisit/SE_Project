@@ -1,6 +1,6 @@
 <template>
   <BaseButton
-    class="focus:(outline-none ring ring-blue-300) text-blue-600 bg-blue-50 border-blue-200 hover:bg-blue-100 active:bg-blue-200"
+    class="focus:(outline-none ring ring-indigo-300) text-indigo-600 bg-indigo-50 border-indigo-200 hover:bg-indigo-100 active:bg-indigo-200"
   >
     <slot />
   </BaseButton>

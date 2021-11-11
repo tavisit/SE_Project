@@ -192,6 +192,13 @@ export default defineComponent({
           Check 4
         </template>
       </DangerInput>
+      <AltInput
+        type="checkbox"
+      >
+        <template #label>
+          Check 5
+        </template>
+      </AltInput>
     </div>
     <span class="text-2xl font-medium">Radios (inputs under cover)</span>
     <div class="py-5 flex flex-row gap-4">
@@ -227,6 +234,22 @@ export default defineComponent({
           Radio 4
         </template>
       </DangerInput>
+      <AltInput
+        type="radio"
+        name="test"
+      >
+        <template #label>
+          Radio 5
+        </template>
+      </AltInput>
+    </div>
+    <span class="text-2xl font-medium">Alt styles</span>
+    <div class="py-5 flex flex-col gap-4">
+      <AltInput v-model="inputStr">
+        <template #label>
+          Radio 1
+        </template>
+      </AltInput>
     </div>
   </div>
 </template>

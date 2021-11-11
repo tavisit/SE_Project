@@ -6,7 +6,7 @@ export default defineComponent({
 
 <template>
   <BaseInput
-    class="text-blue-700 focus:(outline-none ring ring-blue-100) bg-white border-blue-200 hover:bg-blue-50 active:bg-blue-100"
+    class="text-indigo-700 focus:(outline-none ring ring-indigo-100) bg-white border-indigo-200 hover:bg-indigo-50 active:bg-indigo-100"
   >
     <!-- Take all scoped slots, and pass them to the BaseInput -->
     <template
