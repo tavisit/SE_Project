@@ -4,12 +4,17 @@ export default defineComponent({
     const inputStr = ref('')
     const inputNum = ref(null)
     const inputDate = ref('')
+    const inputBool = ref(false)
 
     const inputHandle = () => {
       // console.log(inputStr.value, inputNum.value, inputDate.value)
     }
 
-    return { inputStr, inputNum, inputDate, inputHandle }
+    const logValue = (evt) => {
+      console.log(inputBool.value, evt)
+    }
+
+    return { inputStr, inputNum, inputDate, inputHandle, logValue, inputBool }
   }
 })
 </script>
@@ -152,20 +157,22 @@ export default defineComponent({
           </template>
         </DangerInput>
 
-        <DangerInput
+        <AltInput
           type="file"
           multiple
         >
           <template #label>
             File input
           </template>
-        </DangerInput>
+        </AltInput>
       </div>
     </div>
     <span class="text-2xl font-medium">Checkboxes (inputs under cover)</span>
     <div class="py-5 flex flex-row gap-4">
       <PrimaryInput
         type="checkbox"
+        @change="logValue"
+        v-model="inputBool"
       >
         <template #label>
           Check 1
@@ -205,6 +212,8 @@ export default defineComponent({
       <PrimaryInput
         type="radio"
         name="test"
+        @change="logValue"
+        v-model="inputBool"
       >
         <template #label>
           Radio 1
@@ -240,14 +249,6 @@ export default defineComponent({
       >
         <template #label>
           Radio 5
-        </template>
-      </AltInput>
-    </div>
-    <span class="text-2xl font-medium">Alt styles</span>
-    <div class="py-5 flex flex-col gap-4">
-      <AltInput v-model="inputStr">
-        <template #label>
-          Radio 1
         </template>
       </AltInput>
     </div>

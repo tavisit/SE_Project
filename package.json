@@ -10,5 +10,6 @@
     "nuxt3": "latest"
   },
   "dependencies": {
+    "firebase": "^9.6.1"
   }
 }

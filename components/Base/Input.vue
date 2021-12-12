@@ -39,15 +39,25 @@ export default defineComponent({
       activeInput.value = !activeInput.value
     }
 
-    const inputHandle = (evt: any) => {
-      const val = evt.target.value ?? modelValue.value
-      context.emit('update:modelValue', val)
-    }
-
     const inputType = computed(() => {
       //? I don't know if attrs are reactive!! maybe destruct $attrs with toRefs()?
       return context.attrs.type ?? 'text';
     })
+
+    const inputHandle = (evt: Event) => {
+      const target = evt.target as HTMLInputElement
+      const itype = inputType.value
+      const { files, checked } = target
+      let { value } = target
+
+      if (itype == 'file')
+        context.emit('update:modelValue', files)
+
+      if (itype == 'checkbox' && itype == 'radio')
+        context.emit('update:modelValue', checked)
+
+      context.emit('update:modelValue', value)
+    }
 
     const noPlaceholderInputs = ['date', 'checkbox', 'radio', 'file'];
     const isPlaceholder = computed(() => {
@@ -69,6 +79,7 @@ export default defineComponent({
       return !!customDesignInputs.find(itype => itype == inputType.value)
     })
 
+    // TODO remove this and keep only the name and the selected files count
     const files = ref<FileList | null>(null)
     const fileHandle = () => {
       if (inputType.value != 'file') {
@@ -85,13 +96,16 @@ export default defineComponent({
       files.value = input.files;
     }
 
+    const changedHandle = () => {
+      fileHandle()
+    }
+
     const hasFiles = computed(() => {
       switch (inputType.value) {
         case 'file':
           if (!files.value)
             return false;
           let fileList = files.value
-          console.log(fileList, fileList.length);
 
           return fileList.length > 0
         default:
@@ -105,7 +119,6 @@ export default defineComponent({
           if (!files.value)
             return 'No file selected';
           let fileList = files.value
-          console.log(fileList, fileList.length);
 
           if (!fileList.length)
             return 'No file selected';
@@ -125,7 +138,7 @@ export default defineComponent({
       label,
       inputClick,
       inputHandle,
-      fileHandle,
+      changedHandle,
       toggleActiveInput,
       activeInput,
       inputType,
@@ -164,7 +177,7 @@ export default defineComponent({
         'rounded-full': isRadio,
         'hidden': isCustomDesign,
       }"
-      @change="fileHandle"
+      @change="changedHandle"
       @focusin="toggleActiveInput"
       @focusout="toggleActiveInput"
       v-bind="$attrs"
