@@ -1,6 +1,4 @@
 <script lang="ts">
-import { toRefs } from 'vue';
-
 type NavLinksProps = {
   styling: String,
   active: String,
@@ -32,12 +30,14 @@ export default {
 <template>
   <NuxtLink
     to="/history"
+    class="transition"
     :class="styling + ($route.path == '/history' ? active : '')"
   >
     History
   </NuxtLink>
   <NuxtLink
     to="/batch"
+     class="transition"
     :class="styling + ($route.path == '/batch' ? active : '')"
   >
     Batch
