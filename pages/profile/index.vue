@@ -1,31 +1,120 @@
 <script setup lang="ts">
-  fetch(`http://localhost:3000/api/register`, {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: "POST",
-    body: JSON.stringify({
-      email: 'teo.virghi@gmail.com',
-      password: 'a$<yR//v`#M&uky2g:SpL\"r+4j;t{NUv',
+  var loginEmail = ref('')
+  var loginPassword = ref('')
+  var registerEmail = ref('')
+  var registerPassword = ref('')
+  var toggleRegisterVariable = false
+
+  const registerButton = () => {
+      fetch(`http://localhost:3000/api/register`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: registerEmail.value,
+        password: registerPassword.value,
+      })
     })
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const loginButton = () => {
+    fetch(`http://localhost:3000/api/login`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: loginEmail.value,
+        password: loginPassword.value,
+      })
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+    
 </script>
 
 <template>
-  <div>
-    <!--TODO LOGIN REGSITER FORMS  -->
-    <PrimaryButton
-      class="mt-1"
+  <div style="width:800px; margin:0 auto; margin-bottom:5%;">
+    <div 
+    class="w-1/2 flex flex-col" style="margin-bottom:5%;"
+    v-if="!toggleRegisterVariable"
     >
-      Button
-    </PrimaryButton>
+      <span class="text-2xl font-medium">Login</span>
+      <PrimaryInput
+        v-model="loginEmail"
+      >
+        <template #label>
+        Email
+        </template>
+      </PrimaryInput>
+      <PrimaryInput 
+        type="password"
+        v-model="loginPassword"
+      >
+        <template #label>
+        Password
+        </template>
+      </PrimaryInput>
+      <PrimaryButton
+        class="mt-1"
+        @click = "loginButton"
+      >
+        Login
+      </PrimaryButton>
+      <PrimaryButton
+        class="mt-1"
+        v-on:click="toggleRegisterVariable = true"
+      >
+        To Register
+      </PrimaryButton>
+    </div>
+    <div 
+      class="w-1/2 flex flex-col" style="margin-bottom:5%;"
+      v-if="!toggleRegisterVariable"
+    >
+      <span class="text-2xl font-medium">Register</span>
+      <PrimaryInput
+        v-model="registerEmail"
+      >
+        <template #label>
+        Email
+        </template>
+      </PrimaryInput>
+      <PrimaryInput type="password"
+        v-model="registerPassword"
+      >
+        <template #label>
+        Password
+        </template>
+      </PrimaryInput>
+      <PrimaryButton
+        class="mt-1"
+        @click = "registerButton"
+      >
+        Register
+      </PrimaryButton>
+      <PrimaryButton
+        class="mt-1"
+        v-on:click="toggleRegisterVariable = false"
+      >
+        To Login
+      </PrimaryButton>
+    </div>
+    
   </div>
 </template>
