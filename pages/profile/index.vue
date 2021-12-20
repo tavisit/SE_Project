@@ -45,6 +45,7 @@
         console.log(error);
       });
   }
+
     
 </script>
 
@@ -52,7 +53,7 @@
   <div style="width:800px; margin:0 auto; margin-bottom:5%;">
     <div 
     class="w-1/2 flex flex-col" style="margin-bottom:5%;"
-    v-if="!toggleRegisterVariable"
+    v-if="toggleRegisterVariable === false"
     >
       <span class="text-2xl font-medium">Login</span>
       <PrimaryInput
@@ -85,7 +86,7 @@
     </div>
     <div 
       class="w-1/2 flex flex-col" style="margin-bottom:5%;"
-      v-if="!toggleRegisterVariable"
+      v-if="toggleRegisterVariable === true"
     >
       <span class="text-2xl font-medium">Register</span>
       <PrimaryInput
