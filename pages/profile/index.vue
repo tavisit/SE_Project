@@ -1,11 +1,13 @@
-<script setup lang="ts">
-  var loginEmail = ref('')
-  var loginPassword = ref('')
-  var registerEmail = ref('')
-  var registerPassword = ref('')
-  var toggleRegisterVariable = false
+<script>
+export default defineComponent({
+  setup() {
+    var loginEmail = ref('')
+    var loginPassword = ref('')
+    var registerEmail = ref('')
+    var registerPassword = ref('')
+    var toggleRegisterVariable = ref(false)
 
-  const registerButton = () => {
+    const registerButton = () => {
       fetch(`http://localhost:3000/api/register`, {
       headers: {
         'Accept': 'application/json',
@@ -45,8 +47,10 @@
         console.log(error);
       });
   }
+    return { registerButton, loginButton, toggleRegisterVariable, registerPassword, registerEmail, loginPassword,loginEmail }
 
-    
+  }
+})
 </script>
 
 <template>
@@ -93,14 +97,14 @@
         v-model="registerEmail"
       >
         <template #label>
-        Email
+        Register Email
         </template>
       </PrimaryInput>
       <PrimaryInput type="password"
         v-model="registerPassword"
       >
         <template #label>
-        Password
+        Register Password
         </template>
       </PrimaryInput>
       <PrimaryButton
