@@ -1,16 +1,16 @@
-import type { IncomingMessage, ServerResponse } from "http";
-import bodyParse from "./bodyParse";
-import queryParse from "./queryParse";
+import type { IncomingMessage, ServerResponse } from 'http';
+import bodyParse from './bodyParse';
+import queryParse from './queryParse';
 
 export default class RequestHandler<
   QueryParams = Record<string, any>,
-  DataParams = Record<string, any>
+  DataParams = Record<string, any>,
 > {
   req: IncomingMessage;
   onDataCallback: (chunk: string, body: string) => void = () => {};
   onEndCallback: (
     params: { query: QueryParams; data: DataParams },
-    body: string
+    body: string,
   ) => void = () => {};
   errorHandler: (error: any) => void = () => {};
 
@@ -29,10 +29,10 @@ export default class RequestHandler<
   }
 
   handle(
-    callback: (parameters: { query: QueryParams; data: DataParams }) => void
+    callback: (parameters: { query: QueryParams; data: DataParams }) => void,
   ) {
-    let body = "";
-    this.req.on("data", (chunk) => {
+    let body = '';
+    this.req.on('data', (chunk) => {
       try {
         body += chunk;
         this.onDataCallback(chunk, body);
@@ -40,7 +40,7 @@ export default class RequestHandler<
         this.errorHandler(error);
       }
     });
-    this.req.on("end", () => {
+    this.req.on('end', () => {
       try {
         const parameters = {
           query: queryParse<QueryParams>(this.req.url),

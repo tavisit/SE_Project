@@ -1,8 +1,8 @@
-import { auth } from "./common";
+import { auth } from './common';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 export const register = async (email: string, password: string) => {
   try {

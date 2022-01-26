@@ -1,5 +1,5 @@
-import type { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from 'http';
 
 export default (req: IncomingMessage, res: ServerResponse) => {
-  res.end("Hello world!");
+  res.end('Hello world!');
 };

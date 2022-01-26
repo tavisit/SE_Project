@@ -1,6 +1,6 @@
-import type { IncomingMessage, ServerResponse } from "http";
-import RequestHandler from "../utils/requestParse/requestHandler";
-import { register } from "../utils/firebaseLogic/auth";
+import type { IncomingMessage, ServerResponse } from 'http';
+import RequestHandler from '../utils/requestParse/requestHandler';
+import { register } from '../utils/firebaseLogic/auth';
 
 export interface ExpectedPostParams {
   email: string;
@@ -21,7 +21,7 @@ export default (req: IncomingMessage, res: ServerResponse) => {
     })
     .catch((error) => {
       res.statusCode = 500;
-      res.statusMessage = "Error";
+      res.statusMessage = 'Error';
       res.end(JSON.stringify(null));
       console.log(error);
     });

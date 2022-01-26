@@ -1,22 +1,22 @@
-import { defineNuxtConfig } from "nuxt3";
+import { defineNuxtConfig } from 'nuxt3';
 
 export default defineNuxtConfig({
   dev: true,
   debug: true,
   buildModules: [
-    "nuxt-windicss",
+    'nuxt-windicss',
     // '@nuxtjs/eslint-module',
     [
-      "@nuxtjs/eslint-module",
+      '@nuxtjs/eslint-module',
       {
-        context: "./",
-        exclude: ["node_modules", ".nuxt"],
+        context: './',
+        exclude: ['node_modules', '.nuxt'],
         fix: true,
-        configFile: ".eslintrc.js",
+        configFile: '.eslintrc.js',
         emitWarning: true,
         emitError: true,
         failOnError: true,
-        outputReport: "lint.log",
+        outputReport: 'lint.log',
       },
     ],
   ],
@@ -33,9 +33,9 @@ export default defineNuxtConfig({
     },
   },
   css: [
-    "virtual:windi-base.css",
-    "~/assets/index.css",
-    "virtual:windi-components.css",
-    "virtual:windi-utilities.css",
+    'virtual:windi-base.css',
+    '~/assets/index.css',
+    'virtual:windi-components.css',
+    'virtual:windi-utilities.css',
   ],
 });
