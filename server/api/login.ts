@@ -20,32 +20,35 @@ export default (req: IncomingMessage, res: ServerResponse) => {
           const user = await login(email.trim(), password.trim());
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ user }));
-        }
-        catch(err) {
+        } catch (err) {
           res.writeHead(409, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({
-            invalid: [],
-            code: err.code,
-            message: err.message,
-            name: err.name,
-          }));
+          res.end(
+            JSON.stringify({
+              invalid: [],
+              code: err.code,
+              message: err.message,
+              name: err.name,
+            }),
+          );
         }
-      }
-      else {
+      } else {
         res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          invalid: [ 'email', 'password'],
-          message: 'Invalid email or password',
-        }));
+        res.end(
+          JSON.stringify({
+            invalid: ['email', 'password'],
+            message: 'Invalid email or password',
+          }),
+        );
       }
-    }
-    else {
+    } else {
       console.log(err);
       res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
+      res.end(
+        JSON.stringify({
           invalid: [],
           message: 'Server error!',
-        }));
+        }),
+      );
     }
   });
 };
