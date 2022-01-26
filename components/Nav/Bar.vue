@@ -1,13 +1,15 @@
 <script lang="ts">
-export default {
+export default defineComponent({
   setup() {
-    const mobileMenuToggle = ref<Boolean>(true);
+    const user = useAuth();
+    const mobileMenuToggle = ref(true);
 
     return {
       mobileMenuToggle,
-    }
+      user,
+    };
   },
-}
+});
 </script>
 
 <template>
@@ -37,23 +39,24 @@ export default {
             </div>
           </div>
         </div>
-        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex-1 flex items-center justify-center sm:(items-stretch justify-start)">
           <div class="flex-shrink-0 flex items-center">
             <!-- ICON -->
             <NuxtLink to="/"><IconApp /></NuxtLink>
           </div>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden sm:(block ml-6)">
             <!-- LIST -->
             <div class="flex space-x-4 tracking-wider">
-              <BaseNavLinks
-                styling="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold"
-                active="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-semibold"
+              <NavLinks
+                styling="text-gray-300 hover:(bg-gray-700 text-white transform translate-y-1) px-3 py-2 rounded-md text-sm font-semibold"
+                active="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-semibold transform translate-y-1"
               />
             </div>
           </div>
         </div>
         <div class="flex-grow flex items-end justify-end">
           <NuxtLink
+            v-if="user.isAuthenticated()"
             to="/profile"
             class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
           >
@@ -62,6 +65,18 @@ export default {
               class="w-full h-full bg-cover"
             />
           </NuxtLink>
+          <div v-else class="flex fler-row gap-4">
+            <NuxtLink to="/login">
+              <SuccessButton>
+                Login
+              </SuccessButton>
+            </NuxtLink>
+            <NuxtLink to="/register">
+              <WarnButton>
+                Register
+              </WarnButton>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
@@ -73,8 +88,8 @@ export default {
       v-if="mobileMenuToggle"
     >
       <div class="px-2 pt-2 pb-3 space-y-1 tracking-wider">
-        <BaseNavLinks
-          styling="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-semibold"
+        <NavLinks
+          styling="text-gray-300 hover:(bg-gray-700 text-white) block px-3 py-2 rounded-md text-base font-semibold"
           active="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-semibold"
         />
       </div>

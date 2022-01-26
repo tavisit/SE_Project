@@ -1,12 +1,11 @@
 <script lang="ts">
-import { toRefs } from 'vue';
 
 type NavLinksProps = {
   styling: String,
   active: String,
 };
 
-export default {
+export default defineComponent({
   props: {
     styling: {
       type: String,
@@ -20,24 +19,30 @@ export default {
 
   setup(props: NavLinksProps) {
     const { styling, active } = toRefs(props);
+    const user = useAuth();
 
     return {
       styling,
       active,
+      user
     }
   },
-}
+})
 </script>
 
 <template>
   <NuxtLink
+    v-if="user.isAuthenticated()"
     to="/history"
+    class="transition"
     :class="styling + ($route.path == '/history' ? active : '')"
   >
     History
   </NuxtLink>
   <NuxtLink
+    v-if="user.isAuthenticated()"
     to="/batch"
+     class="transition"
     :class="styling + ($route.path == '/batch' ? active : '')"
   >
     Batch

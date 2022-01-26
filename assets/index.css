@@ -21,6 +21,14 @@ html, body {
   font-family: Nunito;
 }
 
-a {
-  text-decoration: none;
+/* a {
+  all: unset;
 }
+
+button {
+  all: unset;
+}
+
+input {
+  all: unset;
+} */

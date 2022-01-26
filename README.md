@@ -18,6 +18,19 @@ Start the development server on <http://localhost:3000>
 yarn dev -o
 ```
 
+Linter:
+
+```bash
+yarn lint
+```
+
+Lint fix:
+
+```bash
+yarn lint-fix
+# yarn lint --fix
+```
+
 ## Production
 
 Build the application for production:
