@@ -6,11 +6,11 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     modelValue: {
-      type: [String, Number, Boolean] as PropType<String | Number | Boolean | null>,
+      type: [String, Number, Boolean ,Array] as PropType<String | Number | Boolean | Array<File> | null>,
       default: () => null,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'files'],
   setup(props, context) {
     // Slot implementations
     const hasActivator = computed(() => {
@@ -43,17 +43,18 @@ export default defineComponent({
     const inputHandle = (evt: Event) => {
       const target = evt.target as HTMLInputElement
       const itype = inputType.value
-      const { files, checked } = target
-      let { value } = target
+      const { files, checked, value } = target
 
       if (itype == 'file') {
-        context.emit('update:modelValue', files)
+        context.emit('files', Array.from(files));
+        context.emit('update:modelValue', value);
+      }
+      else if (itype == 'checkbox' || itype == 'radio') {
+        context.emit('update:modelValue', checked);
       }
       else {
-        if (itype == 'checkbox' && itype == 'radio')
-          context.emit('update:modelValue', checked)
+        context.emit('update:modelValue', value);
       }
-      context.emit('update:modelValue', value)
     }
 
     const noPlaceholderInputs = ['date', 'checkbox', 'radio', 'file'];
@@ -71,13 +72,17 @@ export default defineComponent({
       return inputType.value === 'radio'
     })
 
+    const isCheckbox = computed(() => {
+      return inputType.value === 'checkbox'
+    })
+
     const customDesignInputs = ['file']
     const isCustomDesign = computed(() => {
       return !!customDesignInputs.find(itype => itype == inputType.value)
     })
 
     // TODO remove this and keep only the name and the selected files count
-    const files = ref<FileList | null>(null)
+    const files = ref<Array<File> | null>(null)
     const fileHandle = () => {
       if (inputType.value != 'file') {
         files.value = null;
@@ -90,11 +95,12 @@ export default defineComponent({
         return;
       }
 
-      files.value = input.files;
+      files.value = Array.from(input.files);
     }
 
-    const changedHandle = () => {
-      fileHandle()
+    const changedHandle = (evt: Event) => {
+      inputHandle(evt); // uselful for checkboxes and radios
+      fileHandle();
     }
 
     const hasFiles = computed(() => {
@@ -141,6 +147,7 @@ export default defineComponent({
       isPlaceholder,
       isInlinedInput,
       isRadio,
+      isCheckbox,
       isCustomDesign,
       hasActivator,
       description,
@@ -157,7 +164,7 @@ export default defineComponent({
       v-if="!isInlinedInput"
       class="absolute text-gray-400 left-[13px] top-[7px] transition pointer-events-none"
       :class="{
-        'transform -translate-y-10 scale-75 text-gray-600': isPlaceholder,
+        'transform -translate-y-7 scale-80 text-gray-600': isPlaceholder,
       }"
     >
       <slot name="label" />
@@ -167,6 +174,7 @@ export default defineComponent({
       ref="iref"
       @input="inputHandle"
       :value="modelValue"
+      :checked="isRadio || isCheckbox ? !!modelValue : null"
       class="w-full py-2 px-3 transition appearance-none border shadow rounded leading-tight cursor-pointer"
       :class="{
         'inline-block w-3 h-3': isInlinedInput,
@@ -207,7 +215,7 @@ export default defineComponent({
       v-if="isInlinedInput"
       class="text-gray-400 left-[13px] top-[7px] transition ml-1 cursor-pointer select-none"
       :class="{
-        'transform -translate-y-10 scale-75 text-gray-600': isPlaceholder,
+        'transform -translate-y-7 scale-80 text-gray-600': isPlaceholder,
       }"
       @click="inputClick"
     >

@@ -1,6 +1,7 @@
 <script lang="ts">
 export default defineComponent({
   setup() {
+    const inputFile = ref<FileList | null>(null);
     const inputStr = ref('');
     const inputNum = ref(null);
     const inputDate = ref('');
@@ -11,10 +12,18 @@ export default defineComponent({
     };
 
     const logValue = (evt) => {
-      console.log(inputBool.value, evt);
+      console.log(evt.target.checked);
     };
 
-    return { inputStr, inputNum, inputDate, inputHandle, logValue, inputBool };
+    watch(inputBool, (val) => {
+      console.log(val, typeof val);
+    });
+
+    watch(inputFile, (val) => {
+      console.log(val);
+    });
+
+    return { inputFile, inputStr, inputNum, inputDate, inputHandle, logValue, inputBool };
   }
 });
 </script>
@@ -159,6 +168,7 @@ export default defineComponent({
 
         <AltInput
           type="file"
+          v-model="inputFile"
           multiple
         >
           <template #label>
