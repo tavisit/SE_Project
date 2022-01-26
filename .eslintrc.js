@@ -19,12 +19,10 @@ module.exports = {
     'max-len': ['warn', { code: 170 }],
     'vue/multi-word-component-names': 'off',
     '@typescript-eslint/ban-types': 'warn',
-    'vue/multi-word-component-names': 'warn',
     'no-unused-vars': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
     'space-in-parens': 'off',
     'computed-property-spacing': 'off',
-    'max-len': 'warn',
     semi: [2, 'always'],
   },
 };
