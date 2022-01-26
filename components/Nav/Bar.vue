@@ -24,22 +24,37 @@ export default defineComponent({
               @click="mobileMenuToggle = !mobileMenuToggle"
             >
               <span class="sr-only">Open main menu</span>
-              <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div
+                class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              >
                 <span
                   aria-hidden="true"
                   class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
                   :class="{
                     'rotate-45': mobileMenuToggle === true,
-                    '-translate-y-1.5': !mobileMenuToggle
+                    '-translate-y-1.5': !mobileMenuToggle,
                   }"
                 />
-                <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'opacity-0': mobileMenuToggle } "/>
-                <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out" :class="{'-rotate-45': mobileMenuToggle, ' translate-y-1.5': !mobileMenuToggle}" />
+                <span
+                  aria-hidden="true"
+                  class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                  :class="{ 'opacity-0': mobileMenuToggle }"
+                />
+                <span
+                  aria-hidden="true"
+                  class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                  :class="{
+                    '-rotate-45': mobileMenuToggle,
+                    ' translate-y-1.5': !mobileMenuToggle,
+                  }"
+                />
               </div>
             </div>
           </div>
         </div>
-        <div class="flex-1 flex items-center justify-center sm:(items-stretch justify-start)">
+        <div
+          class="flex-1 flex items-center justify-center sm:(items-stretch justify-start)"
+        >
           <div class="flex-shrink-0 flex items-center">
             <!-- ICON -->
             <NuxtLink to="/"><IconApp /></NuxtLink>
@@ -67,14 +82,10 @@ export default defineComponent({
           </NuxtLink>
           <div v-else class="flex fler-row gap-4">
             <NuxtLink to="/login">
-              <SuccessButton>
-                Login
-              </SuccessButton>
+              <SuccessButton> Login </SuccessButton>
             </NuxtLink>
             <NuxtLink to="/register">
-              <WarnButton>
-                Register
-              </WarnButton>
+              <WarnButton> Register </WarnButton>
             </NuxtLink>
           </div>
         </div>
@@ -82,11 +93,7 @@ export default defineComponent({
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div
-      class="sm:hidden"
-      id="mobile-menu"
-      v-if="mobileMenuToggle"
-    >
+    <div class="sm:hidden" id="mobile-menu" v-if="mobileMenuToggle">
       <div class="px-2 pt-2 pb-3 space-y-1 tracking-wider">
         <NavLinks
           styling="text-gray-300 hover:(bg-gray-700 text-white) block px-3 py-2 rounded-md text-base font-semibold"

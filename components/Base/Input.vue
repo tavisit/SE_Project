@@ -1,12 +1,14 @@
 <script lang="ts">
-import { PropType } from 'vue'
+import { PropType } from 'vue';
 
 export default defineComponent({
   // custom attribute inheritance, directly to input, instead of the <div> root
   inheritAttrs: false,
   props: {
     modelValue: {
-      type: [String, Number, Boolean ,Array] as PropType<String | Number | Boolean | Array<File> | null>,
+      type: [String, Number, Boolean, Array] as PropType<
+        String | Number | Boolean | Array<File> | null
+      >,
       default: () => null,
     },
   },
@@ -14,81 +16,82 @@ export default defineComponent({
   setup(props, context) {
     // Slot implementations
     const hasActivator = computed(() => {
-      return !!context.slots.activator
-    })
+      return !!context.slots.activator;
+    });
 
     // Component references
-    const iref = ref<HTMLInputElement | null>(null)
+    const iref = ref<HTMLInputElement | null>(null);
     const inputClick = () => {
       const input = iref.value;
-      if (input == null)
-        return;
+      if (input == null) return;
 
-      input.click()
-    }
+      input.click();
+    };
 
     // Reactive props
-    const { modelValue } = toRefs(props)
-    const activeInput = ref(false)
+    const { modelValue } = toRefs(props);
+    const activeInput = ref(false);
 
     const toggleActiveInput = () => {
-      activeInput.value = !activeInput.value
-    }
+      activeInput.value = !activeInput.value;
+    };
 
     const inputType = computed(() => {
       //? I don't know if attrs are reactive!! maybe destruct $attrs with toRefs()?
       return context.attrs.type ?? 'text';
-    })
+    });
 
     const inputHandle = (evt: Event) => {
-      const target = evt.target as HTMLInputElement
-      const itype = inputType.value
-      const { files, checked, value } = target
+      const target = evt.target as HTMLInputElement;
+      const itype = inputType.value;
+      const { files, checked, value } = target;
 
       if (itype == 'file') {
         context.emit('files', Array.from(files));
         context.emit('update:modelValue', value);
-      }
-      else if (itype == 'checkbox' || itype == 'radio') {
+      } else if (itype == 'checkbox' || itype == 'radio') {
         context.emit('update:modelValue', checked);
-      }
-      else {
+      } else {
         context.emit('update:modelValue', value);
       }
-    }
+    };
 
     const noPlaceholderInputs = ['date', 'checkbox', 'radio', 'file'];
     const isPlaceholder = computed(() => {
-      return (modelValue.value || modelValue.value === 0) || activeInput.value ||
-        noPlaceholderInputs.find(itype => itype == inputType.value)
-    })
+      return (
+        modelValue.value ||
+        modelValue.value === 0 ||
+        activeInput.value ||
+        noPlaceholderInputs.find((itype) => itype == inputType.value)
+      );
+    });
 
-    const inlinedInputs = ['checkbox', 'radio']
+    const inlinedInputs = ['checkbox', 'radio'];
     const isInlinedInput = computed(() => {
-      return !!inlinedInputs.find(itype => itype == inputType.value)
-    })
+      return !!inlinedInputs.find((itype) => itype == inputType.value);
+    });
 
     const isRadio = computed(() => {
-      return inputType.value === 'radio'
-    })
+      return inputType.value === 'radio';
+    });
 
     const isCheckbox = computed(() => {
-      return inputType.value === 'checkbox'
-    })
+      return inputType.value === 'checkbox';
+    });
 
-    const customDesignInputs = ['file']
+    const customDesignInputs = ['file'];
     const isCustomDesign = computed(() => {
-      return !!customDesignInputs.find(itype => itype == inputType.value)
-    })
+      return !!customDesignInputs.find((itype) => itype == inputType.value);
+    });
 
     // TODO remove this and keep only the name and the selected files count
-    const files = ref<Array<File> | null>(null)
+    const files = ref<Array<File> | null>(null);
     const fileHandle = () => {
       if (inputType.value != 'file') {
         files.value = null;
         return;
       }
-      
+
       const input = iref.value;
       if (input == null) {
         files.value = null;
@@ -96,44 +99,40 @@ export default defineComponent({
       }
 
       files.value = Array.from(input.files);
-    }
+    };
 
     const changedHandle = (evt: Event) => {
       inputHandle(evt); // uselful for checkboxes and radios
       fileHandle();
-    }
+    };
 
     const hasFiles = computed(() => {
       switch (inputType.value) {
         case 'file':
-          if (!files.value)
-            return false;
-          let fileList = files.value
+          if (!files.value) return false;
+          let fileList = files.value;
 
-          return fileList.length > 0
+          return fileList.length > 0;
         default:
-          return false
+          return false;
       }
-    })
+    });
 
     const description = computed(() => {
       switch (inputType.value) {
         case 'file':
-          if (!files.value)
-            return 'No file selected';
-          let fileList = files.value
+          if (!files.value) return 'No file selected';
+          let fileList = files.value;
 
-          if (!fileList.length)
-            return 'No file selected';
+          if (!fileList.length) return 'No file selected';
           else {
-            if (fileList.length === 1)
-              return fileList[0].name;
+            if (fileList.length === 1) return fileList[0].name;
             else return `${fileList.length} selected`;
           }
         default:
-          return ''
+          return '';
       }
-    })
+    });
 
     return {
       iref,
@@ -152,9 +151,9 @@ export default defineComponent({
       hasActivator,
       description,
       hasFiles,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>
@@ -179,7 +178,7 @@ export default defineComponent({
       :class="{
         'inline-block w-3 h-3': isInlinedInput,
         'rounded-full': isRadio,
-        'hidden': isCustomDesign,
+        hidden: isCustomDesign,
       }"
       @change="changedHandle"
       @focusin="toggleActiveInput"

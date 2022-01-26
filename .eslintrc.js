@@ -16,6 +16,9 @@ module.exports = {
   },
   plugins: ['vue', '@typescript-eslint'],
   rules: {
+    'max-len': ['warn', { code: 170 }],
+    'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/ban-types': 'warn',
     'vue/multi-word-component-names': 'warn',
     'no-unused-vars': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
