@@ -61,7 +61,7 @@ class CookieUser implements IUser {
    * Check if the user is valid
    */
   public isValid(): boolean {
-    return !!(this.id && this.token && this.name && this.email);
+    return !!(this.id && this.email);
   }
 
   isAuthenticated(): boolean {

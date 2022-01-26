@@ -213,7 +213,7 @@ export default defineComponent({
     <!-- The label for inlined inputs -->
     <label
       v-if="isInlinedInput"
-      class="text-gray-400 left-[13px] top-[7px] transition ml-1 cursor-pointer select-none"
+      class="text-gray-600 left-[13px] top-[7px] transition ml-1 cursor-pointer select-none"
       :class="{
         'transform -translate-y-7 scale-80 text-gray-600': isPlaceholder,
       }"

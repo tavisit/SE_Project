@@ -5,9 +5,36 @@ definePageMeta({
 
 export default defineComponent({
   setup() {
+    const user = useAuth();
     const email = ref('');
     const password = ref('');
-    return { email, password };
+
+    const submit = (evt: Event) => {
+      fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value,
+        }),
+      })
+      .then(response => response.json())
+      .then(d => d.user.user)
+      .then(data => {
+        const { email, uid, stsTokenManager, providerData } = data;
+        const { displayName } = providerData[0];
+        const { accessToken } = stsTokenManager;
+        user.value.email = email;
+        user.value.name = displayName ?? '';
+        user.value.id = uid;
+        user.value.token = accessToken;
+        user.value.save();
+      });
+    };
+
+    return { email, password, submit };
   },
 });
 </script>
@@ -56,7 +83,7 @@ export default defineComponent({
           </AltLink>
         </NuxtLink>
       </div>
-      <PrimaryButton class="float-right">
+      <PrimaryButton @click.prevent="submit">
         Submit
       </PrimaryButton>
     </footer>

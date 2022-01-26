@@ -1,28 +1,51 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import RequestHandler from '../utils/requestParse/requestHandler';
-import { login } from '../utils/firebaseLogic/auth';
+import { login } from '../utils/firebase_logic/auth';
+import formidable from 'formidable';
 
-export interface ExpectedPostParams {
-  email: string;
-  password: string;
+export interface LoginParams {
+  email?: string;
+  password?: string;
 }
 
+const form = formidable();
+
+// TODO make a response handler to send errors and such
+
 export default (req: IncomingMessage, res: ServerResponse) => {
-  new RequestHandler<null, ExpectedPostParams>(req)
-    .handle(async (params) => {
-      const { data } = params;
-      const user = await login(data.email, data.password);
-      if (user === null) {
-        res.statusCode = 401;
-        res.end(JSON.stringify(null));
-      } else {
-        res.end(JSON.stringify(user));
+  form.parse(req, async (err, fields, _) => {
+    if (!err) {
+      const { email, password } = fields as LoginParams;
+      if (email && password && email.trim() && password.trim()) {
+        try {
+          const user = await login(email.trim(), password.trim());
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ user }));
+        }
+        catch(err) {
+          res.writeHead(409, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({
+            invalid: [],
+            code: err.code,
+            message: err.message,
+            name: err.name,
+          }));
+        }
       }
-    })
-    .catch((error) => {
-      res.statusCode = 500;
-      res.statusMessage = 'Error';
-      res.end(JSON.stringify(null));
-      console.log(error);
-    });
+      else {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          invalid: [ 'email', 'password'],
+          message: 'Invalid email or password',
+        }));
+      }
+    }
+    else {
+      console.log(err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          invalid: [],
+          message: 'Server error!',
+        }));
+    }
+  });
 };
