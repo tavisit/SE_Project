@@ -1,10 +1,12 @@
 <script lang="ts">
 export default defineComponent({
   setup() {
+    const user = useAuth();
     const mobileMenuToggle = ref(true);
 
     return {
       mobileMenuToggle,
+      user,
     };
   },
 });
@@ -54,6 +56,7 @@ export default defineComponent({
         </div>
         <div class="flex-grow flex items-end justify-end">
           <NuxtLink
+            v-if="user.isAuthenticated()"
             to="/profile"
             class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
           >
@@ -62,6 +65,18 @@ export default defineComponent({
               class="w-full h-full bg-cover"
             />
           </NuxtLink>
+          <div v-else class="flex fler-row gap-4">
+            <NuxtLink to="/login">
+              <SuccessButton>
+                Login
+              </SuccessButton>
+            </NuxtLink>
+            <NuxtLink to="/register">
+              <WarnButton>
+                Register
+              </WarnButton>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>

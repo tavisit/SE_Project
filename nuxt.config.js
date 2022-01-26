@@ -5,8 +5,7 @@ export default defineNuxtConfig({
   debug: true,
   buildModules: [
     'nuxt-windicss',
-    // '@nuxtjs/eslint-module',
-    [
+    [ //? does this even work?
       '@nuxtjs/eslint-module',
       {
         context: './',
@@ -17,6 +16,7 @@ export default defineNuxtConfig({
         emitError: true,
         failOnError: true,
         outputReport: 'lint.log',
+        include: ['**/*.{js,vue}'], //? does this even work
       },
     ],
   ],
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       // see https://github.com/unjs/listhen#options
       server: {
         port: 4444,
-        open: true,
+        open: false,
       },
     },
   },
