@@ -1,12 +1,15 @@
-import type { IncomingMessage, ServerResponse } from 'http'
-import bodyParse from './bodyParse';
-import queryParse from './queryParse';
+import type { IncomingMessage, ServerResponse } from "http";
+import bodyParse from "./bodyParse";
+import queryParse from "./queryParse";
 
-export default class RequestHandler<QueryParams = Record<string, any>, DataParams = Record<string, any>> {
+export default class RequestHandler<
+  QueryParams = Record<string, any>,
+  DataParams = Record<string, any>
+> {
   req: IncomingMessage;
   onDataCallback: (chunk: string, body: string) => void = () => {};
   onEndCallback: (
-    params: { query: QueryParams, data: DataParams, },
+    params: { query: QueryParams; data: DataParams },
     body: string
   ) => void = () => {};
   errorHandler: (error: any) => void = () => {};
@@ -25,27 +28,27 @@ export default class RequestHandler<QueryParams = Record<string, any>, DataParam
     return this;
   }
 
-  handle(callback: (parameters: { query: QueryParams, data: DataParams, }) => void) {
-    let body = '';
-    this.req.on('data', chunk => {
+  handle(
+    callback: (parameters: { query: QueryParams; data: DataParams }) => void
+  ) {
+    let body = "";
+    this.req.on("data", (chunk) => {
       try {
         body += chunk;
         this.onDataCallback(chunk, body);
-      }
-      catch (error) {
+      } catch (error) {
         this.errorHandler(error);
       }
     });
-    this.req.on('end', () => {
+    this.req.on("end", () => {
       try {
-        let parameters = {
+        const parameters = {
           query: queryParse<QueryParams>(this.req.url),
           data: bodyParse<DataParams>(body),
         };
         this.onEndCallback(parameters, body);
         callback(parameters);
-      }
-      catch (error) {
+      } catch (error) {
         this.errorHandler(error);
       }
     });

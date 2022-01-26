@@ -4,7 +4,7 @@ type NavLinksProps = {
   active: String,
 };
 
-export default {
+export default defineComponent({
   props: {
     styling: {
       type: String,
@@ -24,7 +24,7 @@ export default {
       active,
     }
   },
-}
+})
 </script>
 
 <template>

@@ -32,7 +32,7 @@ export default defineComponent({
     // Return reactive props
     return { href, isTiny, componentType, padding };
   },
-})
+});
 </script>
 
 <template>

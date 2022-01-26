@@ -1,22 +1,22 @@
-<script>
+<script lang="ts">
 export default defineComponent({
   setup() {
-    const inputStr = ref('')
-    const inputNum = ref(null)
-    const inputDate = ref('')
-    const inputBool = ref(false)
+    const inputStr = ref('');
+    const inputNum = ref(null);
+    const inputDate = ref('');
+    const inputBool = ref(false);
 
     const inputHandle = () => {
       // console.log(inputStr.value, inputNum.value, inputDate.value)
-    }
+    };
 
     const logValue = (evt) => {
-      console.log(inputBool.value, evt)
-    }
+      console.log(inputBool.value, evt);
+    };
 
-    return { inputStr, inputNum, inputDate, inputHandle, logValue, inputBool }
+    return { inputStr, inputNum, inputDate, inputHandle, logValue, inputBool };
   }
-})
+});
 </script>
 
 <template>

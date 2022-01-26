@@ -5,10 +5,6 @@ export default defineComponent({
   // custom attribute inheritance, directly to input, instead of the <div> root
   inheritAttrs: false,
   props: {
-    label: {
-      type: String,
-      default: null
-    },
     modelValue: {
       type: [String, Number, Boolean] as PropType<String | Number | Boolean | null>,
       default: () => null,
@@ -32,7 +28,7 @@ export default defineComponent({
     }
 
     // Reactive props
-    const { label, modelValue } = toRefs(props)
+    const { modelValue } = toRefs(props)
     const activeInput = ref(false)
 
     const toggleActiveInput = () => {
@@ -50,12 +46,13 @@ export default defineComponent({
       const { files, checked } = target
       let { value } = target
 
-      if (itype == 'file')
+      if (itype == 'file') {
         context.emit('update:modelValue', files)
-
-      if (itype == 'checkbox' && itype == 'radio')
-        context.emit('update:modelValue', checked)
-
+      }
+      else {
+        if (itype == 'checkbox' && itype == 'radio')
+          context.emit('update:modelValue', checked)
+      }
       context.emit('update:modelValue', value)
     }
 
@@ -135,7 +132,6 @@ export default defineComponent({
     return {
       iref,
       modelValue,
-      label,
       inputClick,
       inputHandle,
       changedHandle,

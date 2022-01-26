@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
 export default defineComponent({
   setup() {
-    var loginEmail = ref('')
-    var loginPassword = ref('')
-    var registerEmail = ref('')
-    var registerPassword = ref('')
-    var toggleRegisterVariable = ref(false)
+    var loginEmail = ref('');
+    var loginPassword = ref('');
+    var registerEmail = ref('');
+    var registerPassword = ref('');
+    var toggleRegisterVariable = ref(false);
 
     const registerButton = () => {
       fetch(`http://localhost:3000/api/register`, {
@@ -26,7 +26,7 @@ export default defineComponent({
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   const loginButton = () => {
     fetch(`http://localhost:3000/api/login`, {
       headers: {
@@ -46,11 +46,11 @@ export default defineComponent({
       .catch((error) => {
         console.log(error);
       });
-  }
-    return { registerButton, loginButton, toggleRegisterVariable, registerPassword, registerEmail, loginPassword,loginEmail }
+  };
+    return { registerButton, loginButton, toggleRegisterVariable, registerPassword, registerEmail, loginPassword,loginEmail };
 
   }
-})
+});
 </script>
 
 <template>

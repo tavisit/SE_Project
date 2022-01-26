@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default defineComponent({
   setup() {
     return {
@@ -44,9 +44,9 @@ export default defineComponent({
           date: "10-09-2021"
         }
      ]
-    }
+    };
   }   
-})
+});
 </script>
 
 <template>

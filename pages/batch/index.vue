@@ -1,15 +1,15 @@
-<script>
+<script lang="ts">
 export default defineComponent({
   setup() {
-    const previewUrl = ref(null)
+    const previewUrl = ref(null);
     const onFileChange = (e)=> {
       const file = e.target.files[0];
       previewUrl.value = URL.createObjectURL(file);
       
-    }
+    };
     return{previewUrl,onFileChange};
   }
-})
+});
 </script>
 
 <template>

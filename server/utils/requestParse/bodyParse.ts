@@ -8,4 +8,4 @@ export default <T = Record<string, string>>(body?: string) => {
     return {} as unknown as T;
   }
   return params as unknown as T;
-}
+};

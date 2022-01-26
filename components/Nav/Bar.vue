@@ -1,13 +1,13 @@
 <script lang="ts">
-export default {
+export default defineComponent({
   setup() {
     const mobileMenuToggle = ref(true);
 
     return {
       mobileMenuToggle,
-    }
+    };
   },
-}
+});
 </script>
 
 <template>
