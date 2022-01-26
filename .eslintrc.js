@@ -24,5 +24,5 @@ module.exports = {
     'space-in-parens': 'off',
     'computed-property-spacing': 'off',
     semi: [2, 'always'],
-  },
+  }
 };
