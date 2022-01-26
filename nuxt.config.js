@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   debug: true,
   buildModules: [
     'nuxt-windicss',
-    [ //? does this even work?
+    [
+      //? does this even work?
       '@nuxtjs/eslint-module',
       {
         context: './',

@@ -1,4 +1,4 @@
-import { CookieOptions, CookieRef, useState } from '#app'
+import { CookieOptions, CookieRef, useState } from '#app';
 
 interface IUser {
   id: string;
@@ -7,17 +7,12 @@ interface IUser {
   email: string;
 }
 
-const mandatoryUserFields = [
-  "id",
-  "token",
-  "name",
-  "email"
-];
+const mandatoryUserFields = ['id', 'token', 'name', 'email'];
 
 const cookieOptions: CookieOptions<IUser> = {
   sameSite: 'strict',
-  expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 365)),
-}
+  expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+};
 
 class CookieUser implements IUser {
   cookie_ref_name: string;
@@ -36,7 +31,7 @@ class CookieUser implements IUser {
         id: '',
         token: '',
         name: '',
-        email: ''
+        email: '',
       };
       cookie_ref.value = user;
     }
@@ -52,7 +47,7 @@ class CookieUser implements IUser {
       id: this.id,
       token: this.token,
       name: this.name,
-      email: this.email
+      email: this.email,
     };
     useCookie<IUser>(this.cookie_ref_name, cookieOptions).value = iuser;
   }
@@ -74,16 +69,18 @@ class CookieUser implements IUser {
    * @param user Possibly a deserialized user object
    */
   static implementsIUser(user: any): boolean {
-    return typeof user === 'object' &&
+    return (
+      typeof user === 'object' &&
       !Array.isArray(user) &&
       user !== null &&
       Object.keys(user).length >= mandatoryUserFields.length &&
       Object.keys(user).reduce((acc, field) => {
         return acc && mandatoryUserFields.includes(field);
-      }, true);
+      }, true)
+    );
   }
 }
 
 export const useAuth = () => {
   return ref(new CookieUser('user'));
-}
+};
