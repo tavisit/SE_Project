@@ -7,6 +7,7 @@ definePageMeta({
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const user = useAuth();
     const email = ref('');
     const password = ref('');
@@ -40,6 +41,7 @@ export default defineComponent({
               name: displayName ?? '',
             }),
           };
+          router.push({ path: '/' });
         });
     };
 
