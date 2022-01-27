@@ -4,7 +4,7 @@ export default defineComponent({
     // Button and Anchor specific props
     href: {
       type: String,
-      default: null
+      default: null,
     },
     // Styling specific props
     isTiny: {
@@ -20,9 +20,9 @@ export default defineComponent({
     const componentType = computed(() => {
       /**
        ** There is also an <input type="submit" /> which acts like a button
-        * However it is shadowed by <button type="submit" /> which does the same thing
-        *  and also accepts content
-        */
+       * However it is shadowed by <button type="submit" /> which does the same thing
+       *  and also accepts content
+       */
       return href.value ? 'a' : 'button';
     });
     const padding = computed(() => {
@@ -42,6 +42,6 @@ export default defineComponent({
     class="transition select-none rounded-md text-xs font-semibold tracking-widest border shadow"
     :class="`${padding}`"
   >
-    <slot/>
+    <slot />
   </component>
 </template>

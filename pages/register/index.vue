@@ -1,6 +1,8 @@
 <script lang="ts">
+import { User } from '~~/composables/user/types';
+
 definePageMeta({
-  layout: "form",
+  layout: 'form',
 });
 
 export default defineComponent({
@@ -20,18 +22,25 @@ export default defineComponent({
           password: password.value,
         }),
       })
-      .then(response => response.json())
-      .then(d => d.user.user)
-      .then(data => {
-        const { email, uid, stsTokenManager, providerData } = data;
-        const { displayName } = providerData[0];
-        const { accessToken } = stsTokenManager;
-        user.value.email = email;
-        user.value.name = displayName ?? '';
-        user.value.id = uid;
-        user.value.token = accessToken;
-        user.value.save();
-      });
+        .then((response) => response.json())
+        .then((d) => d.user.user)
+        .then((data) => {
+          const { email, uid, stsTokenManager, providerData } = data;
+          const { displayName } = providerData[0];
+          const { accessToken } = stsTokenManager;
+          user.value.email = email;
+          user.value.name = displayName ?? '';
+          user.value.id = uid;
+          user.value.token = accessToken;
+          user.value = {
+            ...new User({
+              id: uid,
+              token: accessToken,
+              email,
+              name: displayName ?? '',
+            }),
+          };
+        });
     };
 
     return { email, password, submit };
@@ -56,14 +65,10 @@ export default defineComponent({
             <legend class="text-xl font-medium">Credentials</legend>
 
             <PrimaryInput v-model="email">
-              <template #label>
-                Email
-              </template>
+              <template #label> Email </template>
             </PrimaryInput>
             <PrimaryInput v-model="password" type="password">
-              <template #label>
-                Password
-              </template>
+              <template #label> Password </template>
             </PrimaryInput>
           </fieldset>
         </div>
@@ -73,19 +78,18 @@ export default defineComponent({
     <footer class="flex items-center justify-between p-6">
       <div class="flex flex-row gap-4">
         <AltLink
-          @click.prevent="email=''; password=''"
+          @click.prevent="
+            email = '';
+            password = '';
+          "
         >
           Clear all
         </AltLink>
         <NuxtLink to="/login">
-          <AltLink>
-            Already registered?
-          </AltLink>
+          <AltLink> Already registered? </AltLink>
         </NuxtLink>
       </div>
-      <PrimaryButton @click.prevent="submit">
-        Submit
-      </PrimaryButton>
+      <PrimaryButton @click.prevent="submit"> Submit </PrimaryButton>
     </footer>
   </form>
 </template>

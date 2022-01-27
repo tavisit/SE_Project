@@ -7,8 +7,8 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "start": "node .output/server/index.mjs",
-    "lint": "eslint --ignore-path .gitignore .",
-    "lint-fix": "eslint --ignore-path .gitignore . --fix"
+    "lint": "eslint --ignore-path .gitignore . && npx prettier --ignore-path .gitignore . -c",
+    "lint-fix": "eslint --ignore-path .gitignore . --fix && npx prettier --ignore-path .gitignore . -w"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
