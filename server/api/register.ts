@@ -2,6 +2,10 @@ import type { IncomingMessage, ServerResponse } from 'http';
 import { register } from '../utils/firebase_logic/auth';
 import formidable from 'formidable';
 import { Message } from '../utils/errorhandling/message';
+import {
+  notificationsArray,
+  NotificationsBack,
+} from '~~/composables/Popup/notifications';
 
 export interface LoginParams {
   email?: string;
@@ -19,14 +23,18 @@ export default (req: IncomingMessage, res: ServerResponse) => {
         try {
           const user = await register(email.trim(), password.trim());
           res = Message.success(res, user);
+          NotificationsBack.setNotification(notificationsArray[0]);
         } catch (err) {
           res = Message.errorContent(res, err);
+          NotificationsBack.setNotification(notificationsArray[1]);
         }
       } else {
         res = Message.errorCredentials(res);
+        NotificationsBack.setNotification(notificationsArray[2]);
       }
     } else {
       res = Message.errorServer(res);
+      NotificationsBack.setNotification(notificationsArray[3]);
     }
   });
 };
