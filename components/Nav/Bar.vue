@@ -71,7 +71,7 @@ export default defineComponent({
         </div>
         <div class="flex-grow flex items-end justify-end">
           <NuxtLink
-            v-if="user.isAuthenticated()"
+            v-if="user.isAuthenticated"
             to="/profile"
             class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
           >

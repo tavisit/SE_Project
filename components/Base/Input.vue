@@ -84,7 +84,6 @@ export default defineComponent({
       return !!customDesignInputs.find((itype) => itype == inputType.value);
     });
 
-    // TODO remove this and keep only the name and the selected files count
     const files = ref<Array<File> | null>(null);
     const fileHandle = () => {
       if (inputType.value != 'file') {

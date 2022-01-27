@@ -1,6 +1,4 @@
 <script lang="ts">
-import { useAuth } from '~~/composables/user';
-
 export default defineComponent({
   setup() {
     const user = useAuth();
@@ -20,12 +18,8 @@ export default defineComponent({
 
     watch(inputBool, (val) => {
       console.log('user', user);
-      console.log('is valid', user.value.isValid());
+      console.log('is valid', user.value.isValid);
       console.log('email', user.value.email);
-      console.log(user.value.save);
-      // console.log(user.value);
-      user.value.email = 'teo.virghi@yahoo.ro';
-      user.value.save();
       console.log(val, typeof val);
     });
 
@@ -49,7 +43,8 @@ export default defineComponent({
 
 <template>
   <div class="p-2">
-    <p>User {{ user }}</p>
+    <!-- <p>User {{ user }}</p> -->
+    <p>{{ user.email }}</p>
     <span class="text-2xl font-medium">Normal sized buttons</span>
     <div class="p-5 flex flex-row gap-4">
       <PrimaryButton class="mt-1"> Button </PrimaryButton>

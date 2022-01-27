@@ -1,4 +1,6 @@
 <script lang="ts">
+import { User } from '~~/composables/user/types';
+
 definePageMeta({
   layout: 'form',
 });
@@ -30,7 +32,14 @@ export default defineComponent({
           user.value.name = displayName ?? '';
           user.value.id = uid;
           user.value.token = accessToken;
-          user.value.save();
+          user.value = {
+            ...new User({
+              id: uid,
+              token: accessToken,
+              email,
+              name: displayName ?? '',
+            }),
+          };
         });
     };
 
