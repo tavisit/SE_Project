@@ -1,8 +1,7 @@
 <script lang="ts">
-
 type NavLinksProps = {
-  styling: String,
-  active: String,
+  styling: string;
+  active: string;
 };
 
 export default defineComponent({
@@ -24,15 +23,15 @@ export default defineComponent({
     return {
       styling,
       active,
-      user
-    }
+      user,
+    };
   },
-})
+});
 </script>
 
 <template>
   <NuxtLink
-    v-if="user.isAuthenticated()"
+    v-if="user.isAuthenticated"
     to="/history"
     class="transition"
     :class="styling + ($route.path == '/history' ? active : '')"
@@ -40,9 +39,9 @@ export default defineComponent({
     History
   </NuxtLink>
   <NuxtLink
-    v-if="user.isAuthenticated()"
+    v-if="user.isAuthenticated"
     to="/batch"
-     class="transition"
+    class="transition"
     :class="styling + ($route.path == '/batch' ? active : '')"
   >
     Batch

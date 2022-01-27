@@ -14,7 +14,6 @@ export default (req: IncomingMessage, res: ServerResponse) => {
   form.parse(req, async (err, fields, _) => {
     if (!err) {
       const { email, password } = fields as LoginParams;
-      console.log(email, password);
       if (email && password && email.trim() && password.trim()) {
         try {
           const user = await register(email.trim(), password.trim());
