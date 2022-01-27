@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import { register } from '../utils/firebase_logic/auth';
 import formidable from 'formidable';
+import { Message } from '../utils/errorhandling/message';
 
 export interface LoginParams {
   email?: string;
@@ -17,37 +18,15 @@ export default (req: IncomingMessage, res: ServerResponse) => {
       if (email && password && email.trim() && password.trim()) {
         try {
           const user = await register(email.trim(), password.trim());
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ user }));
+          res = Message.success(res, user);
         } catch (err) {
-          res.writeHead(409, { 'Content-Type': 'application/json' });
-          res.end(
-            JSON.stringify({
-              invalid: [],
-              code: err.code,
-              message: err.message,
-              name: err.name,
-            }),
-          );
+          res = Message.errorContent(res, err);
         }
       } else {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(
-          JSON.stringify({
-            invalid: ['email', 'password'],
-            message: 'Invalid email or password',
-          }),
-        );
+        res = Message.errorCredentials(res);
       }
     } else {
-      console.log(err);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          invalid: [],
-          message: 'Server error!',
-        }),
-      );
+      res = Message.errorServer(res);
     }
   });
 };
