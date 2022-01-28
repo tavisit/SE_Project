@@ -29,15 +29,15 @@ export default defineComponent({
           console.log(data);
           const { email, uid, stsTokenManager, providerData } = data;
           const { displayName } = providerData[0];
-          const { accessToken } = stsTokenManager;
-          user.value = {
-            ...new User({
-              id: uid,
-              token: accessToken,
-              email,
-              name: displayName ?? '',
-            }),
-          };
+          const { accessToken, expirationTime } = stsTokenManager;
+          const newUser = new User({
+            id: uid,
+            token: accessToken,
+            email,
+            name: displayName ?? '',
+            expiration: expirationTime,
+          });
+          user.value = { ...newUser };
           router.push({ path: '/' });
         })
         .catch((err) => {

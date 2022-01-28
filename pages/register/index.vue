@@ -26,22 +26,22 @@ export default defineComponent({
         .then((response) => response.json())
         .then((d) => d.user.user)
         .then((data) => {
+          console.log(data);
           const { email, uid, stsTokenManager, providerData } = data;
           const { displayName } = providerData[0];
-          const { accessToken } = stsTokenManager;
-          user.value.email = email;
-          user.value.name = displayName ?? '';
-          user.value.id = uid;
-          user.value.token = accessToken;
-          user.value = {
-            ...new User({
-              id: uid,
-              token: accessToken,
-              email,
-              name: displayName ?? '',
-            }),
-          };
+          const { accessToken, expirationTime } = stsTokenManager;
+          const newUser = new User({
+            id: uid,
+            token: accessToken,
+            email,
+            name: displayName ?? '',
+            expiration: expirationTime,
+          });
+          user.value = { ...newUser };
           router.push({ path: '/' });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     };
 

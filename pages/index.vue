@@ -43,8 +43,6 @@ export default defineComponent({
 
 <template>
   <div class="p-2">
-    <!-- <p>User {{ user }}</p> -->
-    <p>{{ user.email }}</p>
     <span class="text-2xl font-medium">Normal sized buttons</span>
     <div class="p-5 flex flex-row gap-4">
       <PrimaryButton class="mt-1"> Button </PrimaryButton>

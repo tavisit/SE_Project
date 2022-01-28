@@ -1,11 +1,18 @@
 // Fields that make an object an IUser
-export const mandatoryUserFields = ['id', 'token', 'name', 'email'];
+export const mandatoryUserFields = [
+  'id',
+  'token',
+  'name',
+  'email',
+  'expiration',
+];
 
 export interface IUser {
   id: string;
   token: string;
   name: string;
   email: string;
+  expiration: number;
 }
 
 export /**
@@ -19,16 +26,19 @@ class User implements IUser {
   token: string;
   name: string;
   email: string;
+  expiration: number;
   isValid: boolean;
   isAuthenticated: boolean;
 
   constructor(user?: IUser | null) {
+    // console.log('received inside constructor', user);
     if (!user || !User.implementsIUser(user)) {
       user = {
         id: '',
         token: '',
         name: '',
         email: '',
+        expiration: 0,
       };
     }
 
@@ -36,9 +46,13 @@ class User implements IUser {
     this.token = user.token.trim();
     this.name = user.name.trim();
     this.email = user.email.trim();
+    this.expiration = user.expiration >= 0 ? user.expiration : 0;
 
     this.isValid = !!(this.id && this.email);
-    this.isAuthenticated = this.isValid && this.token !== '';
+    this.isAuthenticated =
+      this.isValid &&
+      this.token !== '' &&
+      new Date(this.expiration) >= new Date();
   }
 
   /**
@@ -46,14 +60,18 @@ class User implements IUser {
    * @param user Possibly a deserialized user object
    */
   static implementsIUser(user: unknown): boolean {
-    return (
+    const validObject =
       !!user &&
       typeof user === 'object' &&
       !Array.isArray(user) &&
-      user !== null &&
-      Object.keys(user).length >= mandatoryUserFields.length &&
-      Object.keys(user).reduce((acc, field) => {
-        return acc && mandatoryUserFields.includes(field);
+      user !== null;
+    if (!validObject) return false;
+
+    const userKeys = Object.keys(user);
+    return (
+      userKeys.length >= mandatoryUserFields.length &&
+      mandatoryUserFields.reduce((acc, field) => {
+        return acc && userKeys.includes(field);
       }, true)
     );
   }
