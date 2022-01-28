@@ -1,102 +1,28 @@
 <script lang="ts">
 export default defineComponent({
   setup() {
-    var loginEmail = ref('');
-    var loginPassword = ref('');
-    var registerEmail = ref('');
-    var registerPassword = ref('');
-    var toggleRegisterVariable = ref(false);
-
-    const registerButton = () => {
-      fetch(`http://localhost:3000/api/register`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email: registerEmail.value,
-          password: registerPassword.value,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    const loginButton = () => {
-      fetch(`http://localhost:3000/api/login`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email: loginEmail.value,
-          password: loginPassword.value,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+    const user = useAuth();
     return {
-      registerButton,
-      loginButton,
-      toggleRegisterVariable,
-      registerPassword,
-      registerEmail,
-      loginPassword,
-      loginEmail,
+      user,
     };
   },
 });
 </script>
 
 <template>
-  <div style="width: 800px; margin: 0 auto; margin-bottom: 5%">
-    <div
-      class="w-1/2 flex flex-col"
-      style="margin-bottom: 5%"
-      v-if="toggleRegisterVariable === false"
-    >
-      <span class="text-2xl font-medium">Login</span>
-      <PrimaryInput v-model="loginEmail">
-        <template #label> Email </template>
-      </PrimaryInput>
-      <PrimaryInput type="password" v-model="loginPassword">
-        <template #label> Password </template>
-      </PrimaryInput>
-      <PrimaryButton class="mt-1" @click="loginButton"> Login </PrimaryButton>
-      <PrimaryButton class="mt-1" v-on:click="toggleRegisterVariable = true">
-        To Register
-      </PrimaryButton>
+  <article>
+    <div class="max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto space-y-8 max-w-prose">
+        <h1 class="text-3xl font-bold leading-tight text-gray-900 sm:text-5xl">
+          {{ user.email }}
+        </h1>
+
+        <div class="inline-block pb-8 border-b-2 border-blue-500">
+          <p class="font-medium text-gray-600">
+            {{ user.id }}
+          </p>
+        </div>
+      </div>
     </div>
-    <div
-      class="w-1/2 flex flex-col"
-      style="margin-bottom: 5%"
-      v-if="toggleRegisterVariable === true"
-    >
-      <span class="text-2xl font-medium">Register</span>
-      <PrimaryInput v-model="registerEmail">
-        <template #label> Register Email </template>
-      </PrimaryInput>
-      <PrimaryInput type="password" v-model="registerPassword">
-        <template #label> Register Password </template>
-      </PrimaryInput>
-      <PrimaryButton class="mt-1" @click="registerButton">
-        Register
-      </PrimaryButton>
-      <PrimaryButton class="mt-1" v-on:click="toggleRegisterVariable = false">
-        To Login
-      </PrimaryButton>
-    </div>
-  </div>
+  </article>
 </template>

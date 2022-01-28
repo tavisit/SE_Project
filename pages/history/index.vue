@@ -1,86 +1,76 @@
 <script lang="ts">
 export default defineComponent({
   setup() {
+    const user = useAuth();
+    const data = ref<any>(null);
+
+    fetch('/api/current', {
+      method: 'POST',
+    })
+      .then((response) => response.json())
+      .then((d) => {
+        data.value = d;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     return {
-      myHistory: [
-        {
-          input_content:
-            'https://media.springernature.com/full/springer-cms/rest/v1/img/18893370/v1/height/320',
-          input_type: 'input_type',
-          config_precision: '100',
-          post_config_commands: 'post_config_commands',
-          post_config_points: 'post_config_points',
-          pre_config_commands: 'pre_config_commands',
-          pre_config_points: 'pre_config_points',
-          date: '03-08-2021',
-        },
-        {
-          input_content: '',
-          input_type: 'input_type4',
-          config_precision: '1023',
-          post_config_commands: 'post_config_commands2',
-          post_config_points: 'post_config_points2',
-          pre_config_commands: 'pre_config_commands2',
-          pre_config_points: 'pre_config_points2',
-          date: '10-09-2021',
-        },
-        {
-          input_content:
-            'https://media.cntraveller.com/photos/611bf0b8f6bd8f17556db5e4/1:1/w_2000,h_2000,c_limit/gettyimages-1146431497.jpg',
-          input_type: 'input_type2',
-          config_precision: '1324',
-          post_config_commands: 'post_config_commands2',
-          post_config_points: 'post_config_points2',
-          pre_config_commands: 'pre_config_commands2',
-          pre_config_points: 'pre_config_points2',
-          date: '03-10-2021',
-        },
-        {
-          input_content:
-            'https://media.cntraveller.com/photos/611bf0b8f6bd8f17556db5e4/1:1/w_2000,h_2000,c_limit/gettyimages-1146431497.jpg',
-          input_type: 'input_type3',
-          config_precision: '1012',
-          post_config_commands: 'post_config_commands2',
-          post_config_points: 'post_config_points2',
-          pre_config_commands: 'pre_config_commands2',
-          pre_config_points: 'pre_config_points2',
-          date: '10-09-2021',
-        },
-      ],
+      user,
+      data,
     };
   },
 });
 </script>
 
 <template>
-  <ul>
-    <li
-      v-for="item in myHistory"
-      v-bind:key="item.date"
-      class="bg-white-700 text-white transform translate-y-1"
+  <div class="flex flex-col gap-4">
+    <details
+      :open="!!data"
+      class="overflow-hidden border border-gray-200 rounded shadow-xl sm:rounded-lg"
     >
-      <div
-        class="bg-gray-700 text-white transform translate-y-1 px-3 py-2"
-        style="border: 4px solid white"
-      >
-        <p>Date: {{ item.date }}</p>
-        <p>Input type: {{ item.input_type }}</p>
-        <p>Config precision: {{ item.config_precision }}</p>
-        <p>Post config commands: {{ item.post_config_commands }}</p>
-        <p>Post config points: {{ item.post_config_points }}</p>
-        <p>Pre config commands: {{ item.pre_config_commands }}</p>
-        <p>Pre config commands: {{ item.pre_config_points }}</p>
-        <p>Preview image</p>
-        <img
-          v-bind:src="item.input_content"
-          alt="picture text"
-          height="300"
-          width="300"
-        />
-        <PrimaryButton class="mt-1" :isTiny="false">
-          Use this entry
-        </PrimaryButton>
+      <summary class="flex items-center justify-between px-5 py-3 bg-gray-100">
+        <span class="text-sm font-medium"> Last batch </span>
+
+        <svg
+          class="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </summary>
+
+      <div v-if="data" class="border-t border-gray-200 lg:border-t-0">
+        <fieldset>
+          <legend class="block w-full px-5 py-3 text-xs font-medium bg-gray-50">
+            Edge detection
+          </legend>
+
+          <div class="m-4 flex flex-row gap-2">
+            <img :src="data.original" class="object-cover w-1/2" />
+            <img :src="data.edges" class="object-cover w-1/2" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="block w-full px-5 py-3 text-xs font-medium bg-gray-50">
+            Debug
+          </legend>
+
+          <div class="m-4">
+            <img :src="data.debug" class="object-cover w-full" />
+          </div>
+        </fieldset>
       </div>
-    </li>
-  </ul>
+      <div v-else class="border-t border-gray-200 lg:border-t-0">N/A</div>
+    </details>
+  </div>
 </template>

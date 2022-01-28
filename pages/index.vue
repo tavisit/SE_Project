@@ -42,105 +42,33 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="p-2">
-    <span class="text-2xl font-medium">Normal sized buttons</span>
-    <div class="p-5 flex flex-row gap-4">
-      <PrimaryButton class="mt-1"> Button </PrimaryButton>
-      <SecondaryButton class="mt-1"> Button </SecondaryButton>
-      <SuccessButton class="mt-1"> Button </SuccessButton>
-      <WarnButton class="mt-1"> Button </WarnButton>
-      <DangerButton class="mt-1"> Button </DangerButton>
-      <AltButton class="mt-1"> Button </AltButton>
-    </div>
-    <span class="text-2xl font-medium">Tiny buttons</span>
-    <div class="p-5 flex flex-row gap-4">
-      <PrimaryButton class="mt-1" :isTiny="true"> Tiny </PrimaryButton>
-      <SecondaryButton class="mt-1" :isTiny="true"> Tiny </SecondaryButton>
-      <SuccessButton class="mt-1" :isTiny="true"> Tiny </SuccessButton>
-      <WarnButton class="mt-1" :isTiny="true"> Tiny </WarnButton>
-      <DangerButton class="mt-1" :isTiny="true"> Tiny </DangerButton>
-    </div>
-    <span class="text-2xl font-medium">Inputs</span>
-    <div class="p-5 flex flex-row gap-4">
-      <div class="w-1/2 flex flex-col">
-        <PrimaryInput v-model="inputStr" @input="inputHandle">
-          <template #label> String input </template>
-        </PrimaryInput>
+  <article>
+    <div class="max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto space-y-8 max-w-prose">
+        <h1 class="text-3xl font-bold leading-tight text-gray-900 sm:text-5xl">
+          Conversion program demonstration
+        </h1>
 
-        <PrimaryInput
-          v-model.number="inputNum"
-          @input="inputHandle"
-          type="number"
-        >
-          <template #label> Number input </template>
-        </PrimaryInput>
+        <div class="inline-block pb-8 border-b-2 border-blue-500">
+          <p class="font-medium text-gray-600">
+            By Virghileanu Teodor & Octavian Matei
+          </p>
+        </div>
 
-        <PrimaryInput v-model="inputDate" @input="inputHandle" type="date">
-          <template #label> Date input </template>
-        </PrimaryInput>
+        <div class="prose prose-lg max-w-none">
+          <p>
+            This is just a proof of concept demonstration of the standalone
+            conversion program.
+          </p>
 
-        <PrimaryInput type="file">
-          <template #label> File input </template>
-        </PrimaryInput>
-      </div>
-      <div class="w-1/2 flex flex-col">
-        <SuccessInput v-model="inputStr" @input="inputHandle">
-          <template #label> String input </template>
-        </SuccessInput>
+          <h2>Standalone conversion program?</h2>
 
-        <WarnInput v-model.number="inputNum" @input="inputHandle" type="number">
-          <template #label> Number input </template>
-        </WarnInput>
-
-        <DangerInput v-model="inputDate" @input="inputHandle" type="date">
-          <template #label> Date input </template>
-        </DangerInput>
-
-        <AltInput type="file" v-model="inputFile" multiple>
-          <template #label> File input </template>
-        </AltInput>
+          <p>
+            That's right, the conversion program is a standalone application
+            which can be used via an intuitive CLI
+          </p>
+        </div>
       </div>
     </div>
-    <span class="text-2xl font-medium">Checkboxes (inputs under cover)</span>
-    <div class="py-5 flex flex-row gap-4">
-      <PrimaryInput type="checkbox" @change="logValue" v-model="inputBool">
-        <template #label> Check 1 </template>
-      </PrimaryInput>
-      <SuccessInput type="checkbox">
-        <template #label> Check 2 </template>
-      </SuccessInput>
-      <WarnInput type="checkbox">
-        <template #label> Check 3 </template>
-      </WarnInput>
-      <DangerInput type="checkbox">
-        <template #label> Check 4 </template>
-      </DangerInput>
-      <AltInput type="checkbox">
-        <template #label> Check 5 </template>
-      </AltInput>
-    </div>
-    <span class="text-2xl font-medium">Radios (inputs under cover)</span>
-    <div class="py-5 flex flex-row gap-4">
-      <PrimaryInput
-        type="radio"
-        name="test"
-        @change="logValue"
-        v-model="inputBool"
-      >
-        <template #label> Radio 1 </template>
-      </PrimaryInput>
-      <SuccessInput type="radio" name="test">
-        <template #label> Radio 2 </template>
-      </SuccessInput>
-      <WarnInput type="radio" name="test">
-        <template #label> Radio 3 </template>
-      </WarnInput>
-      <DangerInput type="radio" name="test">
-        <template #label> Radio 4 </template>
-      </DangerInput>
-      <AltInput type="radio" name="test">
-        <template #label> Radio 5 </template>
-      </AltInput>
-    </div>
-  </div>
+  </article>
 </template>

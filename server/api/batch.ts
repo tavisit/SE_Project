@@ -5,14 +5,7 @@ import * as fs from 'fs';
 import * as child from 'child_process';
 import formidable from 'formidable';
 
-export interface LoginParams {
-  high?: string;
-  password?: string;
-}
-
 const form = formidable();
-
-// TODO make a response handler to send errors and such
 
 const extractUserID = (req: IncomingMessage): string | null => {
   try {
